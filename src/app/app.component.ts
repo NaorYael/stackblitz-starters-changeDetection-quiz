@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 
 export interface PeriodicElement {
   name: string;
@@ -30,7 +30,8 @@ export class AppComponent {
 
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = ELEMENT_DATA;
-  constructor() {}
+ 
+  constructor(private changeDetection: ChangeDetectorRef) {}
 
   public ngOnInit(): void {
    
@@ -39,8 +40,8 @@ export class AppComponent {
   onClick() {
     const user =  {position: 11, name: 'Test', weight: 20.1797, symbol: 'Ne'};
     // this.dataSource.push(user);
-
-    this.dataSource.push({...user})
+    this.dataSource.push(user);
+    this.changeDetection.detectChanges();
   }
 
 }
